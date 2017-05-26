@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/danmademe/geoip-api/models"
@@ -66,9 +67,17 @@ func Setup() *http.Server {
 // accepts --lang flag
 func Load() []models.Language {
 	var langFile string
-	flag.StringVar(&langFile, "lang", "./languages.json", "a string var")
-	flag.Parse()
+	if models.ConfigFile != "" {
+		langFile = models.ConfigFile
+	} else {
+		flag.StringVar(&langFile, "lang", "", "a string var")
+		flag.Parse()
+	}
 
+	if langFile == "" {
+		fmt.Printf("File error: Missing lang file param pass in via --lang language.json\n")
+		os.Exit(1)
+	}
 	models.ConfigFile = langFile
 	lang := utils.LoadLanguages(langFile)
 	return lang

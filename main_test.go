@@ -17,6 +17,7 @@ func TestSetup(t *testing.T) {
 }
 
 func TestLoad(t *testing.T) {
+	models.ConfigFile = "./languages.json"
 	languages := Load()
 
 	if languages[1].Country == "" {
