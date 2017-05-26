@@ -2,11 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
+	"github.com/danmademe/geoip-api/models"
 	"github.com/danmademe/geoip-api/utils"
 	"github.com/gorilla/mux"
 )
@@ -55,6 +57,19 @@ func Setup() *http.Server {
 	return srv
 }
 
+//Config this gets the config file from flag
+// accepts --lang flag
+func Config() []models.Language {
+	var langFile string
+	flag.StringVar(&langFile, "lang", "languages.json", "a string var")
+	flag.Parse()
+	fmt.Println(langFile)
+	models.ConfigFile = langFile
+	lang := utils.LoadLanguages(langFile)
+	return lang
+}
+
 func main() {
+	models.Languages = Config()
 	log.Fatal(Setup().ListenAndServe())
 }

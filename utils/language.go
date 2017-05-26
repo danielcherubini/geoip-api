@@ -10,8 +10,9 @@ import (
 	"github.com/danmademe/geoip-api/models"
 )
 
-func loadLanguages() []models.Language {
-	file, err := ioutil.ReadFile("./languages.json")
+//LoadLanguages loads languages to a languages model
+func LoadLanguages(langFile string) []models.Language {
+	file, err := ioutil.ReadFile(langFile)
 	if err != nil {
 		fmt.Printf("File error: %v\n", err)
 		os.Exit(1)
@@ -23,7 +24,7 @@ func loadLanguages() []models.Language {
 
 func getLanguage(country string) models.Language {
 	language := models.Language{}
-	languages := loadLanguages()
+	languages := LoadLanguages("./languages.json")
 
 	for i := 0; i < len(languages); i++ {
 		if strings.ToLower(languages[i].Country) == strings.ToLower(country) {

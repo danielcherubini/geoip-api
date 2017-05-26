@@ -13,6 +13,13 @@ func TestSetup(t *testing.T) {
 	}
 }
 
+func TestConfig(t *testing.T) {
+	models := Config()
+	if models[1].Country == "" {
+		t.Fail()
+	}
+}
+
 func TestCheckIpRoute(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {

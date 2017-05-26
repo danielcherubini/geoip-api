@@ -12,3 +12,9 @@ type Language struct {
 	Language string `json:"language"`
 	Country  string `json:"country"`
 }
+
+//Languages
+var Languages []Language
+
+//ConfigFile is a string
+var ConfigFile string
