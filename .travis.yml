@@ -1,21 +1,21 @@
 language: go
 sudo: required
 services:
-    - docker
+- docker
 go:
-    - 1.7.4
+- 1.7.4
 before_install:
-    - go get github.com/mattn/goveralls
-    - go get -d -v ./...
+- go get github.com/mattn/goveralls
+- go get -d -v ./...
 script:
-    - $HOME/gopath/bin/goveralls -service=travis-ci
+- "$HOME/gopath/bin/goveralls -service=travis-ci"
 before_deploy:
-    - make
+- make
 deploy:
     skip_cleanup: true
     provider: releases
     api_key:
-        secure: SI6lDSW2lEhBqPprq4hsoBciIDDyTNCfJ5lM/bkOcqwtoVMh08dlyUA5y6EHSTR9q97xM4J2RHZkOkbevkQ6DfyURCB6eck1qXcUHxUGVfBn8NLmp22CDnAW169hD84nIKYjOSdrHJYUjqIK6RHMAVM9XEIzNforYfYoH1DAOwE0V5Zrany9bkKRpuFOqyZYipy4XD7VC/eCGOu4iybRLPBQQme9hcqFFniIwlW+Y+tRkGZJgbnZ5iGxWgFAu49RZbTCzF5dq1NklDNU5sST6R1naJ0cU3ljvQTffnTnzAdIz0Y8R9U4fsWuDrOeQz8XKL0i/Ngzt9oth/e/LDoSPZP36CHjPI9fNGVnCVttkYhqxWSEodkU5vEAlin2bkbnIge/OQymAg2IM5pPKZQQRZx/pYujahm6mF6LfMgxfIYPkx1gJ/2GtFTWpk5ivXbKJ9cUTTFzcQ6Jidvj0qVFdlb44KlnQkNBGeUWGX4xugEKHHzzdFIRjOXMYh5/yKFyO+fQWNprJYBxu45E09BJ1LaXlCHPJYj0Ht3uE74UqT+S3edJkZ3Rnzl5HitYwA3fSk7ofLKy+lk/gXuSpFT+iF+zG42UEaFlvCNyWrZFlY56Zp1UP9tMf4uWzlqg9rct8xmjX8PiwdSfr0lBx3+8q6tWdJ9rfPtDEzmTA58sry8=
+        secure: Yb2XGCxwBXRKbENAJRIq1cjTmi3ZHGNnemSsi52I70vksJLJS7NkkZf0FI5l+VCOHn8JI+hzVxwTDaY9o1q3O3XOeoBRwZnFWFh4abGJNDYYKmnz2eRiTny/goMrhE+IcBj0inhWzVlAYo7FhDZV37YWE8hmeqNiKvXV7V1DQ6qMF1Q9M+KYYrmNbgvoRZenLieFxyl5oZ8X+T0lIvnXSbwsNRZwdtlYhacZqulHENNA5ZtjZ/k/IeqVxXgJDJWSu2h2EYMJDBJDSyiPijHzDwhGforf3iIjkjmcNk5UPNxpG4LQ2wLQU7bhICQH5imJVtxGQi0qW22DVd2gC6IlgUyPKTkQONXQdNdtV/uVa6kUZ0RR7lZM0uFDTO6T7SgFIpf8O2/5IfPO6JmHiqxo+7e8bxvaZ4KE+Ybp+h0Ekgcd2jE+xuqI06yZzq0/AD/q61LelYlTAW8crpI0avBwE48xJqsORDoGsnS94g0GntVB64Zka3SzHFImWLQheO8ffFg2Wooni5qUZKXbMvTfe7ZKTy8Ipt48quGBJaVbM4WzUjTqpco4uGxxRlAxyx+z7gXMIS5+CyQQIHanr0CL5vU3rzRw3XJTsrmfGqsngG1dr+7vRpaut1TC/UYE2BFywa5s5M8yTBvIXKLe8Q0t5vL1llsBOQHf9NM00JMorsE=
     file:
         - release/geoip-api-linux-amd64
         - release/geoip-api-linux-386
