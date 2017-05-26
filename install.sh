@@ -23,15 +23,16 @@ WantedBy=multiuser.target
 EOM
 
 
-file="/etc/geoip-api/geoip-api.yml"
+file="/etc/geoip-api/languages.json"
 if [ -f "$file" ]
 then
 	echo "$file found, skipping."
 else
-	echo "$file not found, adding."
-    sudo mkdir /etc/geoip-api
-    sudo touch /etc/geoip-api/languages.json
-    sudo chmod 777 /etc/geoip-api/languages.json
+	# echo "$file not found, adding."
+    # sudo mkdir /etc/geoip-api
+    # sudo touch /etc/geoip-api/languages.json
+    # sudo chmod 777 /etc/geoip-api/languages.json
+	exit 1
 fi
 
 sudo systemctl daemon-reload
