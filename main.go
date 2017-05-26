@@ -50,26 +50,26 @@ func Server(r *mux.Router) *http.Server {
 
 //Setup sets server up for logfatal
 func Setup() *http.Server {
-	r := Router()
 
+	r := Router()
 	http.Handle("/", r)
 	srv := Server(r)
 	return srv
 }
 
-//Config this gets the config file from flag
+//Load this gets the config file from flag
 // accepts --lang flag
-func Config() []models.Language {
+func Load() []models.Language {
 	var langFile string
-	flag.StringVar(&langFile, "lang", "languages.json", "a string var")
+	flag.StringVar(&langFile, "lang", "./languages.json", "a string var")
 	flag.Parse()
-	fmt.Println(langFile)
+
 	models.ConfigFile = langFile
 	lang := utils.LoadLanguages(langFile)
 	return lang
 }
 
 func main() {
-	models.Languages = Config()
+	models.Languages = Load()
 	log.Fatal(Setup().ListenAndServe())
 }

@@ -24,11 +24,10 @@ func LoadLanguages(langFile string) []models.Language {
 
 func getLanguage(country string) models.Language {
 	language := models.Language{}
-	languages := LoadLanguages("./languages.json")
 
-	for i := 0; i < len(languages); i++ {
-		if strings.ToLower(languages[i].Country) == strings.ToLower(country) {
-			language = languages[i]
+	for i := 0; i < len(models.Languages); i++ {
+		if strings.ToLower(models.Languages[i].Country) == strings.ToLower(country) {
+			language = models.Languages[i]
 			return language
 		}
 

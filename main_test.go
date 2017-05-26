@@ -4,6 +4,9 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/danmademe/geoip-api/models"
+	"github.com/danmademe/geoip-api/utils"
 )
 
 func TestSetup(t *testing.T) {
@@ -13,14 +16,18 @@ func TestSetup(t *testing.T) {
 	}
 }
 
-func TestConfig(t *testing.T) {
-	models := Config()
-	if models[1].Country == "" {
+func TestLoad(t *testing.T) {
+	languages := Load()
+
+	if languages[1].Country == "" {
 		t.Fail()
 	}
 }
 
 func TestCheckIpRoute(t *testing.T) {
+	//load dummy data
+	models.Languages = utils.LoadLanguages("./languages.json")
+
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
