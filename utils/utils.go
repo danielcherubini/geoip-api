@@ -15,8 +15,7 @@ func getIP(r *http.Request) net.IP {
 	ipString := ""
 
 	if (remoteIP == "") || (strings.Contains(remoteIP, "127.0.0.1")) {
-		forwaredForIP := r.Header.Get("X-Forwarded-For")
-		ipString = forwaredForIP
+		ipString = r.URL.Query().Get("ip")
 	} else {
 		ipString = remoteIP
 	}

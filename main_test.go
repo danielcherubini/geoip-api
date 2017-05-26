@@ -28,13 +28,13 @@ func TestCheckIpRoute(t *testing.T) {
 	//load dummy data
 	models.Languages = utils.LoadLanguages("./languages.json")
 
-	req, err := http.NewRequest("GET", "/", nil)
+	req, err := http.NewRequest("GET", "/?ip=193.215.2.26", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	req.Header.Set("X-Forwarded-For", "193.215.2.26")
+
 	handler := http.HandlerFunc(CheckIPRoute)
 	handler.ServeHTTP(rr, req)
 

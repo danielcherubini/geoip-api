@@ -16,16 +16,21 @@ import (
 //CheckIPRoute is the route for checking IP
 //Returns with ip address
 func CheckIPRoute(w http.ResponseWriter, r *http.Request) {
-	//Setup struct
-	responseObject := utils.GetLocale(r)
+	//Check if ip query is missing
+	if r.URL.Query().Get("ip") == "" {
+		fmt.Fprintf(w, "{\"error\": \"You didn't pass an IP\"}")
+	} else {
+		//Setup struct
+		responseObject := utils.GetLocale(r)
 
-	//Marshal responseObject to JsonResponse
-	jsonByteArray, _ := json.Marshal(responseObject)
-	jsonString := string(jsonByteArray)
+		//Marshal responseObject to JsonResponse
+		jsonByteArray, _ := json.Marshal(responseObject)
+		jsonString := string(jsonByteArray)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%s", jsonString)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "%s", jsonString)
+	}
 }
 
 //Router dfdfd
