@@ -4,10 +4,25 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"strings"
 
 	"github.com/danmademe/geoip-api/models"
 	geoip2 "github.com/oschwald/geoip2-golang"
 )
+
+func getIP(r *http.Request) net.IP {
+	remoteIP := r.RemoteAddr
+	ipString := ""
+
+	if (remoteIP == "") || (strings.Contains(remoteIP, "127.0.0.1")) {
+		forwaredForIP := r.Header.Get("X-Forwarded-For")
+		ipString = forwaredForIP
+	} else {
+		ipString = remoteIP
+	}
+
+	return net.ParseIP(ipString)
+}
 
 //GetCountry takes an ipString and returns a country
 func GetCountry(ip net.IP) *geoip2.Country {
@@ -29,7 +44,7 @@ func GetCountry(ip net.IP) *geoip2.Country {
 func GetLocale(r *http.Request) models.Response {
 	locale := &models.Response{}
 
-	ip := GetIP(r)
+	ip := getIP(r)
 	countryCode := GetCountry(ip).Country.IsoCode
 
 	language := getLanguage(countryCode).Language
