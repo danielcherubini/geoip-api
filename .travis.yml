@@ -19,7 +19,7 @@ deploy:
     file:
         - release/geoip-api-linux
         - release/geoip-api-macos
-        - release/geoip-api-win64
+        - release/geoip-api-win64.exe
     on:
         repo: danmademe/geoip-api
         tags: true
