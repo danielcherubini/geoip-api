@@ -4,6 +4,6 @@ package = github.com/danmademe/geoip-api
 
 release:
 	mkdir -p release
-	GOOS=linux GOARCH=amd64 go build -o release/geoip-api-linux-amd64 $(package)
-	GOOS=linux GOARCH=386 go build -o release/geoip-api-linux-386 $(package)
-	GOOS=linux GOARCH=arm go build -o release/geoip-api-linux-arm $(package)
+	GOOS=linux GOARCH=amd64 go build -o release/geoip-api-linux $(package)
+	GOOS=darwin GOARCH=amd64 go build -o release/geoip-api-macos $(package)
+	GOOS=windows GOARCH=amd64 go build -o release/geoip-api-win64.exe $(package)
