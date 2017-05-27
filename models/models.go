@@ -18,3 +18,6 @@ var Languages []Language
 
 //ConfigFile is a string
 var ConfigFile string
+
+//CurrentHash is the current hash
+var CurrentHash string

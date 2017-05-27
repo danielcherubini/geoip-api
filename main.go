@@ -14,6 +14,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var currentHash = ""
+var ready = false
+
 //CheckIPRoute is the route for checking IP
 //Returns with ip address
 func CheckIPRoute(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +86,35 @@ func Load() []models.Language {
 	return lang
 }
 
+func getDatabase() {
+	currentHash = utils.GetDatabase()
+}
+
+//Run execs the functions
+func Run() {
+	ready = false
+	if !ready {
+		getDatabase()
+		ready = true
+	}
+
+}
+
 func main() {
+	ticker := time.NewTicker(24 * time.Hour)
+	quit := make(chan struct{})
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				// do stuff
+				getDatabase()
+			case <-quit:
+				ticker.Stop()
+				return
+			}
+		}
+	}()
 	models.Languages = Load()
 	log.Fatal(Setup().ListenAndServe())
 }

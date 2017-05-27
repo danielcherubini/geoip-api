@@ -16,6 +16,10 @@ func TestSetup(t *testing.T) {
 	}
 }
 
+func TestGetDatabase(t *testing.T) {
+	getDatabase()
+}
+
 func TestLoad(t *testing.T) {
 	models.ConfigFile = "./languages.json"
 	languages := Load()

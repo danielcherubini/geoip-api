@@ -25,7 +25,7 @@ func getIP(r *http.Request) net.IP {
 
 //GetCountry takes an ipString and returns a country
 func GetCountry(ip net.IP) *geoip2.Country {
-	db, err := geoip2.Open("GeoLite2-Country.mmdb")
+	db, err := geoip2.Open("geo.mmdb")
 	if err != nil {
 		log.Fatal(err)
 	}
