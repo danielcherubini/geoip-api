@@ -59,7 +59,7 @@ func Server(r *mux.Router) *http.Server {
 
 //Setup sets server up for logfatal
 func Setup() *http.Server {
-
+	fmt.Println("Starting Router")
 	r := Router()
 	http.Handle("/", r)
 	srv := Server(r)
@@ -101,13 +101,13 @@ func Run() {
 }
 
 func main() {
+	getDatabase()
 	ticker := time.NewTicker(24 * time.Hour)
 	quit := make(chan struct{})
 	go func() {
 		for {
 			select {
 			case <-ticker.C:
-				// do stuff
 				getDatabase()
 			case <-quit:
 				ticker.Stop()
