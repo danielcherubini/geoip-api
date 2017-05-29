@@ -29,7 +29,7 @@ func CheckIPRoute(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"error\": \"You didn't pass an IP\"}")
 	} else {
 		//Setup struct
-		responseObject := utils.GetLocale(r)
+		responseObject := utils.GetLocale(w, r)
 
 		//Marshal responseObject to JsonResponse
 		jsonByteArray, _ := json.Marshal(responseObject)
