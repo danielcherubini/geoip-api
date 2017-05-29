@@ -16,6 +16,10 @@ import (
 
 var currentHash = ""
 var ready = false
+var mmdb string
+var gzdb string
+var dburl string
+var langFile string
 
 //CheckIPRoute is the route for checking IP
 //Returns with ip address
@@ -69,46 +73,60 @@ func Setup() *http.Server {
 //Load this gets the config file from flag
 // accepts --lang flag
 func Load() []models.Language {
-	var langFile string
 	if models.ConfigFile != "" {
 		langFile = models.ConfigFile
 	} else {
-		flag.StringVar(&langFile, "lang", "", "a string var")
-		flag.Parse()
+		models.ConfigFile = langFile
 	}
+
+	lang := utils.LoadLanguages(langFile)
+	return lang
+}
+
+func getDatabase(db models.DBLocation) {
+	utils.GetDatabase(db)
+}
+
+func setupVars() models.DBLocation {
+	var db models.DBLocation
+	flag.StringVar(&langFile, "lang", "", "Location of language.json file (REQUIRED)")
+	flag.StringVar(&mmdb, "mmdb", "", "Location of local .mmdb file")
+	flag.StringVar(&gzdb, "gzdb", "", "Location of local .gzip file")
+	flag.StringVar(&dburl, "dburl", "", "Location of remote mmdb/gzip file")
+	flag.Parse()
 
 	if langFile == "" {
 		fmt.Printf("File error: Missing lang file param pass in via --lang language.json\n")
 		os.Exit(1)
 	}
-	models.ConfigFile = langFile
-	lang := utils.LoadLanguages(langFile)
-	return lang
-}
 
-func getDatabase() {
-	currentHash = utils.GetDatabase()
-}
-
-//Run execs the functions
-func Run() {
-	ready = false
-	if !ready {
-		getDatabase()
-		ready = true
+	if mmdb != "" {
+		db.Type = "mmdb"
+		db.Location = mmdb
+	} else if gzdb != "" {
+		db.Type = "GZDB"
+		db.Location = gzdb
+	} else if dburl != "" {
+		db.Type = "DBURL"
+		db.Location = dburl
+	} else {
+		db.Type = "DEFAULT"
+		db.Location = "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
 	}
 
+	return db
 }
 
 func main() {
-	getDatabase()
+	db := setupVars()
+	getDatabase(db)
 	ticker := time.NewTicker(24 * time.Hour)
 	quit := make(chan struct{})
 	go func() {
 		for {
 			select {
 			case <-ticker.C:
-				getDatabase()
+				getDatabase(db)
 			case <-quit:
 				ticker.Stop()
 				return
@@ -116,5 +134,6 @@ func main() {
 		}
 	}()
 	models.Languages = Load()
+	fmt.Println(models.Languages)
 	log.Fatal(Setup().ListenAndServe())
 }

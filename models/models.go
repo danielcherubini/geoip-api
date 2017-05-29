@@ -13,6 +13,14 @@ type Language struct {
 	Country  string `json:"country"`
 }
 
+//DBlocation PRAMS
+//Type: @{STRING}
+//Location: @{STRING}
+type DBLocation struct {
+	Type     string
+	Location string
+}
+
 //Languages
 var Languages []Language
 

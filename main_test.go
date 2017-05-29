@@ -17,7 +17,11 @@ func TestSetup(t *testing.T) {
 }
 
 func TestGetDatabase(t *testing.T) {
-	getDatabase()
+	db := models.DBLocation{
+		Location: "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz",
+		Type:     "DBURL",
+	}
+	getDatabase(db)
 }
 
 func TestLoad(t *testing.T) {
