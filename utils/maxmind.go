@@ -86,8 +86,8 @@ func getDatabase(url string) {
 	filename := urlIndex[len(urlIndex)-1]
 	isGzip := strings.Contains(filename, "tar.gz")
 
-	lastthing := tempDir[len(tempDir)-1:]
-	if lastthing != "/" {
+	lastIndexOfTempDirString := tempDir[len(tempDir)-1:]
+	if lastIndexOfTempDirString != "/" {
 		fmt.Println("Missing slash at end")
 		tempDir = tempDir + "/"
 	}
