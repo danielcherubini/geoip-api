@@ -1,10 +1,9 @@
 language: go
-sudo: required
 go:
-- 1.8.3
+    - 1.8.3
 before_install:
-- go get github.com/mattn/goveralls
-- go get -d -v ./...
+    - go get github.com/mattn/goveralls
+    - go get -d -v ./...
 jobs:
     include:
         - stage: Coverage
