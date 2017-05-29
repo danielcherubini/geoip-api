@@ -4,10 +4,11 @@ services:
 - docker
 go:
 - 1.8.3
+before_install:
+- go get github.com/mattn/goveralls
+- go get -d -v ./...
 jobs:
     include:
-        - script: go get github.com/mattn/goveralls
-        - script: go get -d -v ./...
         - stage: Coverage
           script: "$HOME/gopath/bin/goveralls -service=travis-ci"
         - stage: Build Binaries
