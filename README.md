@@ -30,7 +30,12 @@ I convert ip's into countries and stuff
     { "language": "es", "country": "MX" },
     { "language": "es", "country": "ES" }
 ]
+```
 
+# API Usage
+
+```
+curl http://127.0.0.1:45000/\?ip\=193.215.2.26
 ```
 
 # Install using
