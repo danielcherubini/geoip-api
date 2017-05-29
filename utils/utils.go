@@ -4,21 +4,13 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"strings"
 
 	"github.com/danmademe/geoip-api/models"
 	geoip2 "github.com/oschwald/geoip2-golang"
 )
 
 func getIP(r *http.Request) net.IP {
-	remoteIP := r.RemoteAddr
-	ipString := ""
-
-	if (remoteIP == "") || (strings.Contains(remoteIP, "127.0.0.1")) {
-		ipString = r.URL.Query().Get("ip")
-	} else {
-		ipString = remoteIP
-	}
+	ipString := r.URL.Query().Get("ip")
 
 	return net.ParseIP(ipString)
 }
