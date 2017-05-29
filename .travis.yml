@@ -1,27 +1,23 @@
 language: go
 go:
-    - 1.8.3
+- 1.8.3
 before_install:
-    - go get github.com/mattn/goveralls
-    - go get -d -v ./...
-jobs:
-    include:
-        - stage: Coverage
-          script: "$HOME/gopath/bin/goveralls -service=travis-ci"
-        - stage: Build Binaries
-          script: make
-        - stage: GitHub Release
-          script: echo "Deploying to GitHub releases ..."
-          deploy:
-              skip_cleanup: true
-              provider: releases
-              api_key:
-                  secure: Yb2XGCxwBXRKbENAJRIq1cjTmi3ZHGNnemSsi52I70vksJLJS7NkkZf0FI5l+VCOHn8JI+hzVxwTDaY9o1q3O3XOeoBRwZnFWFh4abGJNDYYKmnz2eRiTny/goMrhE+IcBj0inhWzVlAYo7FhDZV37YWE8hmeqNiKvXV7V1DQ6qMF1Q9M+KYYrmNbgvoRZenLieFxyl5oZ8X+T0lIvnXSbwsNRZwdtlYhacZqulHENNA5ZtjZ/k/IeqVxXgJDJWSu2h2EYMJDBJDSyiPijHzDwhGforf3iIjkjmcNk5UPNxpG4LQ2wLQU7bhICQH5imJVtxGQi0qW22DVd2gC6IlgUyPKTkQONXQdNdtV/uVa6kUZ0RR7lZM0uFDTO6T7SgFIpf8O2/5IfPO6JmHiqxo+7e8bxvaZ4KE+Ybp+h0Ekgcd2jE+xuqI06yZzq0/AD/q61LelYlTAW8crpI0avBwE48xJqsORDoGsnS94g0GntVB64Zka3SzHFImWLQheO8ffFg2Wooni5qUZKXbMvTfe7ZKTy8Ipt48quGBJaVbM4WzUjTqpco4uGxxRlAxyx+z7gXMIS5+CyQQIHanr0CL5vU3rzRw3XJTsrmfGqsngG1dr+7vRpaut1TC/UYE2BFywa5s5M8yTBvIXKLe8Q0t5vL1llsBOQHf9NM00JMorsE=
-              file:
-                  - release/geoip-api-linux
-                  - release/geoip-api-macos
-                  - release/geoip-api-win64.exe
-              on:
-                  repo: danmademe/geoip-api
-                  tags: true
-                  all_branches: true
+- go get github.com/mattn/goveralls
+- go get -d -v ./...
+script:
+- "$HOME/gopath/bin/goveralls -service=travis-ci"
+before_deploy:
+- make
+deploy:
+    skip_cleanup: true
+    provider: releases
+    api_key:
+        secure: Yb2XGCxwBXRKbENAJRIq1cjTmi3ZHGNnemSsi52I70vksJLJS7NkkZf0FI5l+VCOHn8JI+hzVxwTDaY9o1q3O3XOeoBRwZnFWFh4abGJNDYYKmnz2eRiTny/goMrhE+IcBj0inhWzVlAYo7FhDZV37YWE8hmeqNiKvXV7V1DQ6qMF1Q9M+KYYrmNbgvoRZenLieFxyl5oZ8X+T0lIvnXSbwsNRZwdtlYhacZqulHENNA5ZtjZ/k/IeqVxXgJDJWSu2h2EYMJDBJDSyiPijHzDwhGforf3iIjkjmcNk5UPNxpG4LQ2wLQU7bhICQH5imJVtxGQi0qW22DVd2gC6IlgUyPKTkQONXQdNdtV/uVa6kUZ0RR7lZM0uFDTO6T7SgFIpf8O2/5IfPO6JmHiqxo+7e8bxvaZ4KE+Ybp+h0Ekgcd2jE+xuqI06yZzq0/AD/q61LelYlTAW8crpI0avBwE48xJqsORDoGsnS94g0GntVB64Zka3SzHFImWLQheO8ffFg2Wooni5qUZKXbMvTfe7ZKTy8Ipt48quGBJaVbM4WzUjTqpco4uGxxRlAxyx+z7gXMIS5+CyQQIHanr0CL5vU3rzRw3XJTsrmfGqsngG1dr+7vRpaut1TC/UYE2BFywa5s5M8yTBvIXKLe8Q0t5vL1llsBOQHf9NM00JMorsE=
+    file:
+        - release/geoip-api-linux
+        - release/geoip-api-macos
+        - release/geoip-api-win64.exe
+    on:
+        repo: danmademe/geoip-api
+        tags: true
+        all_branches: true
