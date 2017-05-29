@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"errors"
 	"log"
 	"net"
 	"net/http"
@@ -33,19 +33,22 @@ func GetCountry(ip net.IP) *geoip2.Country {
 }
 
 //GetLocale takes a country_code and returns object
-func GetLocale(w http.ResponseWriter, r *http.Request) models.Response {
+func GetLocale(r *http.Request) (error, models.Response) {
 	locale := &models.Response{}
 
 	ip := getIP(r)
 	if ip == nil {
-		fmt.Fprintf(w, "{\"error\": \"IP Is Invalid\"}")
-	}
-	countryCode := GetCountry(ip).Country.IsoCode
+		err := errors.New("Invalid IP")
+		return err, *locale
+	} else {
+		countryCode := GetCountry(ip).Country.IsoCode
 
-	language := getLanguage(countryCode).Language
-	locale.IPAddress = ip.String()
-	locale.CountryCode = countryCode
-	locale.Language = language
-	locale.IsoString = language + "-" + countryCode
-	return *locale
+		language := getLanguage(countryCode).Language
+		locale.IPAddress = ip.String()
+		locale.CountryCode = countryCode
+		locale.Language = language
+		locale.IsoString = language + "-" + countryCode
+		return nil, *locale
+	}
+
 }

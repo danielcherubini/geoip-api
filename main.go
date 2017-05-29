@@ -29,15 +29,19 @@ func CheckIPRoute(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"error\": \"You didn't pass an IP\"}")
 	} else {
 		//Setup struct
-		responseObject := utils.GetLocale(w, r)
+		err, responseObject := utils.GetLocale(r)
+		if err != nil {
+			fmt.Fprintf(w, "{\"error\": \"%s\"}", err.Error())
+		} else {
 
-		//Marshal responseObject to JsonResponse
-		jsonByteArray, _ := json.Marshal(responseObject)
-		jsonString := string(jsonByteArray)
+			//Marshal responseObject to JsonResponse
+			jsonByteArray, _ := json.Marshal(responseObject)
+			jsonString := string(jsonByteArray)
 
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "%s", jsonString)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, "%s", jsonString)
+		}
 	}
 }
 

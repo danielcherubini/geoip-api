@@ -7,6 +7,10 @@ type Response struct {
 	IsoString   string `json:"iso"`
 }
 
+type Error struct {
+	Error string `json:"error"`
+}
+
 //Language contains a Counyty and Language as strings
 type Language struct {
 	Language string `json:"language"`
