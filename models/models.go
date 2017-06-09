@@ -25,6 +25,16 @@ type DBLocation struct {
 	Location string
 }
 
+//S3Config PARAMS
+//Bucket: @{STRING}
+//Location: @{STRING}
+//Region: @{STRING}
+type S3Config struct {
+	Bucket string
+	Key    string
+	Region string
+}
+
 //Languages
 var Languages []Language
 

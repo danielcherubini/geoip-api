@@ -81,47 +81,21 @@ func moveDB(tempDir string) {
 	}
 }
 
-func getDatabase(url string) {
-	urlIndex := strings.Split(url, "/")
+func getDatabase(urlString string) {
+	var filePath = ""
+	urlIndex := strings.Split(urlString, "/")
 	filename := urlIndex[len(urlIndex)-1]
 	isGzip := strings.Contains(filename, "tar.gz")
 
-	lastIndexOfTempDirString := tempDir[len(tempDir)-1:]
-	if lastIndexOfTempDirString != "/" {
-		fmt.Println("Missing slash at end")
-		tempDir = tempDir + "/"
-	}
-
-	filePath := tempDir + filename
-
-	fmt.Println(url)
-	fmt.Println(filePath)
-
-	output, err := os.Create(filePath)
+	err, filePath := downloadUrl(urlString, filename)
 	if err != nil {
-		fmt.Println("Error while creating", filePath, "-", err)
 		return
 	}
-	defer output.Close()
-
-	response, err := http.Get(url)
-	if err != nil {
-		fmt.Println("Error while downloading", url, "-", err)
-		return
-	}
-	defer response.Body.Close()
-
-	n, err := io.Copy(output, response.Body)
-	if err != nil {
-		fmt.Println("Error while downloading", url, "-", err)
-		return
-	}
-
-	fmt.Println(n, "bytes downloaded.")
 
 	if isGzip {
 		unTar(filePath, tempDir)
 	}
+
 	moveDB(tempDir)
 }
 
