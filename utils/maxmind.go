@@ -33,6 +33,10 @@ func findFile(pattern string) string {
 
 func unTar(filePath string, tempDir string) error {
 	fmt.Println("Decompressing Tarball")
+	lastIndexOfTempDirString := tempDir[len(tempDir)-1:]
+	if lastIndexOfTempDirString != "/" {
+		tempDir = tempDir + "/"
+	}
 	respByte, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Println("fail to read response data")
@@ -67,6 +71,10 @@ func copyFileContents(src, dst string) (err error) {
 }
 
 func moveDB(tempDir string) error {
+	lastIndexOfTempDirString := tempDir[len(tempDir)-1:]
+	if lastIndexOfTempDirString != "/" {
+		tempDir = tempDir + "/"
+	}
 	var file string
 	if strings.Contains(tempDir, ".mmdb") {
 		file = tempDir
