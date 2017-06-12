@@ -12,10 +12,6 @@ func TestGetDatabase(t *testing.T) {
 		Type:     "DBURL",
 	}
 	// db := models.DBLocation{
-	// 	Location: "https://s3.amazonaws.com/tidal-bi-emr/libs/playbacklog/GeoIP2-City.mmdb",
-	// 	Type:     "DBURL",
-	// }
-	// db := models.DBLocation{
 	// 	Location: "../GeoLite2-City.tar.gz",
 	// 	Type:     "GZDB",
 	// }

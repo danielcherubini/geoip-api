@@ -19,6 +19,9 @@ var ready = false
 var mmdb string
 var gzdb string
 var dburl string
+var s3bucket string
+var s3key string
+var s3region string
 var langFile string
 
 //CheckIPRoute is the route for checking IP
@@ -93,12 +96,23 @@ func getDatabase(db models.DBLocation) {
 	utils.GetDatabase(db)
 }
 
+func checkS3vars(s3Config models.S3Config) {
+	if s3Config.Bucket == "" || s3Config.Key == "" || s3Config.Region == "" {
+		fmt.Println("S3 Config incorrect missing params")
+		os.Exit(1)
+	}
+}
+
 func setupVars() models.DBLocation {
 	var db models.DBLocation
 	flag.StringVar(&langFile, "lang", "", "Location of language.json file (REQUIRED)")
 	flag.StringVar(&mmdb, "mmdb", "", "Location of local .mmdb file")
 	flag.StringVar(&gzdb, "gzdb", "", "Location of local .gzip file")
 	flag.StringVar(&dburl, "dburl", "", "Location of remote mmdb/gzip file")
+	flag.StringVar(&s3bucket, "s3bucket", "", "Bucket name on S3")
+	flag.StringVar(&s3key, "s3key", "", "Full file path from root on the s3 bucket so if its /foo/bar/qux.jpg then thats the key")
+	flag.StringVar(&s3region, "s3region", "", "Which region is the S3 bucket in")
+
 	flag.Parse()
 
 	if langFile == "" {
@@ -115,6 +129,13 @@ func setupVars() models.DBLocation {
 	} else if dburl != "" {
 		db.Type = "DBURL"
 		db.Location = dburl
+	} else if s3bucket != "" {
+		db.Type = "S3DB"
+		db.S3Config = models.S3Config{}
+		db.S3Config.Bucket = s3bucket
+		db.S3Config.Key = s3key
+		db.S3Config.Region = s3region
+		checkS3vars(db.S3Config)
 	} else {
 		db.Type = "DEFAULT"
 		db.Location = "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
@@ -140,6 +161,6 @@ func main() {
 		}
 	}()
 	models.Languages = Load()
-	fmt.Println(models.Languages)
+	fmt.Println("Loaded Languages")
 	log.Fatal(Setup().ListenAndServe())
 }

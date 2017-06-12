@@ -16,6 +16,9 @@ I convert ip's into countries and stuff
 * **mmdb** - location of local .mmdb file
 * **gzdb** -- location of local .gzip file
 * **dburl** -- location of remote file (can be mmdb or gzip)
+* **s3bucket** -- s3 bucket
+* **s3key** -- full filepath so if the file is at /foo/bar/qux.jpg then thats your key
+* **s3region** -- region of the s3 bucket
 
 
 # Language JSON
