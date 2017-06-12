@@ -93,7 +93,10 @@ func Load() []models.Language {
 }
 
 func getDatabase(db models.DBLocation) {
-	utils.GetDatabase(db)
+	err := utils.GetDatabase(db)
+	if err != nil {
+		os.Exit(1)
+	}
 }
 
 func checkS3vars(s3Config models.S3Config) {
@@ -146,21 +149,29 @@ func setupVars() models.DBLocation {
 
 func main() {
 	db := setupVars()
-	getDatabase(db)
-	ticker := time.NewTicker(24 * time.Hour)
-	quit := make(chan struct{})
-	go func() {
-		for {
-			select {
-			case <-ticker.C:
-				getDatabase(db)
-			case <-quit:
-				ticker.Stop()
-				return
+	err := utils.GetDatabase(db)
+	if err != nil {
+		os.Exit(1)
+	} else {
+		ticker := time.NewTicker(24 * time.Hour)
+		quit := make(chan struct{})
+		go func() {
+			for {
+				select {
+				case <-ticker.C:
+					err := utils.GetDatabase(db)
+					if err != nil {
+						os.Exit(1)
+					}
+				case <-quit:
+					ticker.Stop()
+					return
+				}
 			}
-		}
-	}()
-	models.Languages = Load()
-	fmt.Println("Loaded Languages")
-	log.Fatal(Setup().ListenAndServe())
+		}()
+		models.Languages = Load()
+		fmt.Println("Loaded Languages")
+		log.Fatal(Setup().ListenAndServe())
+	}
+
 }

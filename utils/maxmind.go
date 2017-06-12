@@ -30,15 +30,16 @@ func findFile(pattern string) string {
 	return matches[0]
 }
 
-func unTar(filePath string, tempDir string) {
+func unTar(filePath string, tempDir string) error {
 	fmt.Println("Decompressing Tarball")
 	respByte, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Println("fail to read response data")
-		return
+		return err
 	}
 	r := bytes.NewReader(respByte)
 	Untar(tempDir, r)
+	return nil
 }
 
 func copyFileContents(src, dst string) (err error) {
@@ -64,7 +65,7 @@ func copyFileContents(src, dst string) (err error) {
 	return
 }
 
-func moveDB(tempDir string) {
+func moveDB(tempDir string) error {
 	var file string
 	if strings.Contains(tempDir, ".mmdb") {
 		file = tempDir
@@ -77,12 +78,13 @@ func moveDB(tempDir string) {
 	err := copyFileContents(file, "geo.mmdb")
 	if err != nil {
 		fmt.Println("failed to movefile")
-		os.Exit(1)
+		return err
 	}
 	fmt.Println("File download finished")
+	return nil
 }
 
-func getUrl(urlString string) {
+func getUrl(urlString string) error {
 	var filePath = ""
 	urlIndex := strings.Split(urlString, "/")
 	filename := urlIndex[len(urlIndex)-1]
@@ -90,17 +92,24 @@ func getUrl(urlString string) {
 
 	err, filePath := downloadUrl(urlString, filename)
 	if err != nil {
-		return
+		return err
 	}
 
 	if isGzip {
-		unTar(filePath, tempDir)
+		err = unTar(filePath, tempDir)
+		if err != nil {
+			return err
+		}
 	}
 
-	moveDB(tempDir)
+	err = moveDB(tempDir)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func getS3(s3Config models.S3Config) {
+func getS3(s3Config models.S3Config) error {
 	var filePath = ""
 	filenameArr := strings.Split(s3Config.Key, "/")
 	filename := filenameArr[len(filenameArr)-1]
@@ -108,14 +117,21 @@ func getS3(s3Config models.S3Config) {
 
 	err, filePath := downloadS3Url(s3Config, filename)
 	if err != nil {
-		return
+		return err
 	}
 
 	if isGzip {
 		unTar(filePath, tempDir)
+		if err != nil {
+			return err
+		}
 	}
 
-	moveDB(tempDir)
+	err = moveDB(tempDir)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func getHash() (string, error) {
@@ -145,25 +161,25 @@ func checkHash() string {
 }
 
 //GetDatabase gets the database
-func GetDatabase(db models.DBLocation) {
+func GetDatabase(db models.DBLocation) error {
 	fmt.Println("File download starting")
 	switch db.Type {
 	case "MMDB":
-		moveDB(db.Location)
-		break
+		err := moveDB(db.Location)
+		return err
 	case "GZDB":
 		unTar(db.Location, tempDir)
-		moveDB(tempDir)
-		break
+		err := moveDB(tempDir)
+		return err
 	case "DBURL":
-		getUrl(db.Location)
-		break
+		err := getUrl(db.Location)
+		return err
 	case "S3DB":
-		getS3(db.S3Config)
-		break
+		err := getS3(db.S3Config)
+		return err
 	default:
 		hash := checkHash()
 		checkDBHash(hash)
-		break
+		return nil
 	}
 }
