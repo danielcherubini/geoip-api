@@ -91,7 +91,7 @@ func getUrl(urlString string) error {
 	filename := urlIndex[len(urlIndex)-1]
 	isGzip := strings.Contains(filename, "tar.gz")
 
-	err, filePath := services.downloadUrl(urlString, filename)
+	err, filePath := services.DownloadUrl(urlString, filename)
 	if err != nil {
 		return err
 	}
@@ -116,7 +116,7 @@ func getS3(s3Config models.S3Config) error {
 	filename := filenameArr[len(filenameArr)-1]
 	isGzip := strings.Contains(filename, "tar.gz")
 
-	err, filePath := downloadS3Url(s3Config, filename)
+	err, filePath := services.DownloadS3Url(s3Config, filename)
 	if err != nil {
 		fmt.Println("error in getS3 from downloadS3Url")
 		return err

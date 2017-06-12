@@ -29,10 +29,7 @@ func DownloadS3Url(s3Config models.S3Config, filename string) (err error, filePa
 		return err, ""
 	}
 	// The session the S3 Downloader will use
-	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String(s3Config.Region),
-		DisableSSL: aws.Bool(true),
-		LogLevel:   aws.LogLevel(aws.LogDebugWithHTTPBody),
-	}))
+	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String(s3Config.Region)}))
 
 	// Create a downloader with the session and default options
 	downloader := s3manager.NewDownloader(sess)
