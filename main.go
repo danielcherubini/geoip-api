@@ -125,7 +125,7 @@ func setupVars() models.DBLocation {
 	}
 
 	if mmdb != "" {
-		db.Type = "mmdb"
+		db.Type = "MMDB"
 		db.Location = mmdb
 	} else if gzdb != "" {
 		db.Type = "GZDB"

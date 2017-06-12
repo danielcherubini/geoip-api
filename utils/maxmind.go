@@ -117,18 +117,21 @@ func getS3(s3Config models.S3Config) error {
 
 	err, filePath := downloadS3Url(s3Config, filename)
 	if err != nil {
+		fmt.Println("error in getS3 from downloadS3Url")
 		return err
 	}
 
 	if isGzip {
 		unTar(filePath, tempDir)
 		if err != nil {
+			fmt.Println("error in getS3 from unTar")
 			return err
 		}
 	}
 
 	err = moveDB(tempDir)
 	if err != nil {
+		fmt.Println("error in getS3 from moveDB")
 		return err
 	}
 	return nil

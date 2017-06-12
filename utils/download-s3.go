@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -26,6 +27,7 @@ func downloadS3Url(s3Config models.S3Config, filename string) (err error, filePa
 
 	_, err = downloader.Download(file, input)
 	if err != nil {
+		fmt.Println("S3 Downloader Error")
 		return err, ""
 	}
 	defer file.Close()
