@@ -11,7 +11,6 @@ func downloadUrl(urlString string, filename string) (err error, filePath string)
 
 	lastIndexOfTempDirString := tempDir[len(tempDir)-1:]
 	if lastIndexOfTempDirString != "/" {
-		fmt.Println("Missing slash at end")
 		tempDir = tempDir + "/"
 	}
 
