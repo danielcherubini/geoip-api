@@ -79,15 +79,34 @@ func moveDB(tempDir string) {
 		fmt.Println("failed to movefile")
 		os.Exit(1)
 	}
+	fmt.Println("File download finished")
 }
 
-func getDatabase(urlString string) {
+func getUrl(urlString string) {
 	var filePath = ""
 	urlIndex := strings.Split(urlString, "/")
 	filename := urlIndex[len(urlIndex)-1]
 	isGzip := strings.Contains(filename, "tar.gz")
 
 	err, filePath := downloadUrl(urlString, filename)
+	if err != nil {
+		return
+	}
+
+	if isGzip {
+		unTar(filePath, tempDir)
+	}
+
+	moveDB(tempDir)
+}
+
+func getS3(s3Config models.S3Config) {
+	var filePath = ""
+	filenameArr := strings.Split(s3Config.Key, "/")
+	filename := filenameArr[len(filenameArr)-1]
+	isGzip := strings.Contains(filename, "tar.gz")
+
+	err, filePath := downloadS3Url(s3Config, filename)
 	if err != nil {
 		return
 	}
@@ -127,6 +146,7 @@ func checkHash() string {
 
 //GetDatabase gets the database
 func GetDatabase(db models.DBLocation) {
+	fmt.Println("File download starting")
 	switch db.Type {
 	case "MMDB":
 		moveDB(db.Location)
@@ -136,7 +156,10 @@ func GetDatabase(db models.DBLocation) {
 		moveDB(tempDir)
 		break
 	case "DBURL":
-		getDatabase(db.Location)
+		getUrl(db.Location)
+		break
+	case "S3DB":
+		getS3(db.S3Config)
 		break
 	default:
 		hash := checkHash()
