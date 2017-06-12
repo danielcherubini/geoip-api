@@ -95,6 +95,7 @@ func Load() []models.Language {
 func getDatabase(db models.DBLocation) {
 	err := utils.GetDatabase(db)
 	if err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
 }
@@ -151,6 +152,7 @@ func main() {
 	db := setupVars()
 	err := utils.GetDatabase(db)
 	if err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	} else {
 		ticker := time.NewTicker(24 * time.Hour)
@@ -161,6 +163,7 @@ func main() {
 				case <-ticker.C:
 					err := utils.GetDatabase(db)
 					if err != nil {
+						fmt.Println(err)
 						os.Exit(1)
 					}
 				case <-quit:
