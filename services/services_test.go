@@ -8,6 +8,8 @@ import (
 )
 
 func TestDownloadS3Url(t *testing.T) {
+	fmt.Println("Testing DownloadS3Url")
+
 	s3Config := models.S3Config{}
 	s3Config.Bucket = "tidal-bi-emr"
 	s3Config.Key = "/libs/playbacklog/GeoIP2-City.mmdb"
@@ -21,11 +23,12 @@ func TestDownloadS3Url(t *testing.T) {
 		t.Fail()
 	}
 
-	fmt.Println(filePath)
+	fmt.Println("Test Pass: " + filePath)
 }
 
 //
 // func TestDownloadUrl(t *testing.T) {
+// fmt.Println("Testing DownloadS3Url")
 // 	urlString := "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
 // 	filename := "GeoLite2-City.tar.gz"
 //
@@ -35,5 +38,5 @@ func TestDownloadS3Url(t *testing.T) {
 // 		t.Fail()
 // 	}
 //
-// 	fmt.Println(filePath)
+// fmt.Println("Test Pass: " + filePath)
 // }
