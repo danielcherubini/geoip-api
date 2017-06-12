@@ -19,7 +19,10 @@ var tempDir = os.TempDir()
 func DownloadS3Url(s3Config models.S3Config, filename string) (err error, filePath string) {
 	filePath = tempDir + filename
 	file, err := os.Create(filePath)
-
+	if err != nil {
+		fmt.Println("Error making filepath")
+		return err, ""
+	}
 	// The session the S3 Downloader will use
 	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String(s3Config.Region)}))
 
