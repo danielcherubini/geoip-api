@@ -17,6 +17,11 @@ var tempDir = os.TempDir()
 
 //DownloadS3Url takes a S3Config object and a filename string and gets the file from S3
 func DownloadS3Url(s3Config models.S3Config, filename string) (err error, filePath string) {
+	lastIndexOfTempDirString := tempDir[len(tempDir)-1:]
+	if lastIndexOfTempDirString != "/" {
+		tempDir = tempDir + "/"
+	}
+
 	filePath = tempDir + filename
 	file, err := os.Create(filePath)
 	if err != nil {
