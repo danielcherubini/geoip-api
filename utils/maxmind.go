@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/danmademe/geoip-api/models"
+	"github.com/danmademe/geoip-api/services"
 )
 
 var DBUrl string
@@ -90,7 +91,7 @@ func getUrl(urlString string) error {
 	filename := urlIndex[len(urlIndex)-1]
 	isGzip := strings.Contains(filename, "tar.gz")
 
-	err, filePath := downloadUrl(urlString, filename)
+	err, filePath := services.downloadUrl(urlString, filename)
 	if err != nil {
 		return err
 	}
