@@ -1,4 +1,4 @@
-package utils
+package language
 
 import (
 	"encoding/json"
@@ -22,7 +22,8 @@ func LoadLanguages(langFile string) []models.Language {
 	return language
 }
 
-func getLanguage(country string) models.Language {
+//GetLanguage takes a string and returns a language model
+func GetLanguage(country string) models.Language {
 	language := models.Language{}
 
 	for i := 0; i < len(models.Languages); i++ {

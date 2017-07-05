@@ -1,4 +1,4 @@
-package utils
+package maxmind
 
 import (
 	"bytes"
@@ -12,6 +12,7 @@ import (
 
 	"github.com/danmademe/geoip-api/models"
 	"github.com/danmademe/geoip-api/services"
+	"github.com/danmademe/geoip-api/utils"
 )
 
 var DBUrl string
@@ -43,7 +44,7 @@ func unTar(filePath string, tempDir string) error {
 		return err
 	}
 	r := bytes.NewReader(respByte)
-	Untar(tempDir, r)
+	utils.Untar(tempDir, r)
 	return nil
 }
 

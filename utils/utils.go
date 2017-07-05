@@ -7,14 +7,10 @@ import (
 	"net/http"
 
 	"github.com/danmademe/geoip-api/models"
+	"github.com/danmademe/geoip-api/utils/ip"
+	"github.com/danmademe/geoip-api/utils/language"
 	geoip2 "github.com/oschwald/geoip2-golang"
 )
-
-func getIP(r *http.Request) net.IP {
-	ipString := r.URL.Query().Get("ip")
-
-	return net.ParseIP(ipString)
-}
 
 //GetCountry takes an ipString and returns a country
 func GetCountry(ip net.IP) *geoip2.Country {
@@ -36,14 +32,15 @@ func GetCountry(ip net.IP) *geoip2.Country {
 func GetLocale(r *http.Request) (error, models.Response) {
 	locale := &models.Response{}
 
-	ip := getIP(r)
+	ipString := r.URL.Query().Get("ip")
+	ip := ip.GetIP(ipString)
 	if ip == nil {
 		err := errors.New("Invalid IP")
 		return err, *locale
 	} else {
 		countryCode := GetCountry(ip).Country.IsoCode
 
-		language := getLanguage(countryCode).Language
+		language := language.GetLanguage(countryCode).Language
 		locale.IPAddress = ip.String()
 		locale.CountryCode = countryCode
 		locale.Language = language

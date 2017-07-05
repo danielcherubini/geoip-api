@@ -1,4 +1,4 @@
-package utils
+package language
 
 import (
 	"fmt"
@@ -8,8 +8,8 @@ import (
 )
 
 func TestGetLanguage(t *testing.T) {
-	models.Languages = LoadLanguages("../languages.json")
-	language := getLanguage("NO")
+	models.Languages = LoadLanguages("../../languages.json")
+	language := GetLanguage("NO")
 
 	if language.Language != "en" {
 		t.Fail()

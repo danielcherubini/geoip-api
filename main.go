@@ -11,6 +11,8 @@ import (
 
 	"github.com/danmademe/geoip-api/models"
 	"github.com/danmademe/geoip-api/utils"
+	"github.com/danmademe/geoip-api/utils/language"
+	"github.com/danmademe/geoip-api/utils/maxmind"
 	"github.com/gorilla/mux"
 )
 
@@ -88,12 +90,12 @@ func Load() []models.Language {
 		models.ConfigFile = langFile
 	}
 
-	lang := utils.LoadLanguages(langFile)
+	lang := language.LoadLanguages(langFile)
 	return lang
 }
 
 func getDatabase(db models.DBLocation) {
-	err := utils.GetDatabase(db)
+	err := maxmind.GetDatabase(db)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -150,7 +152,7 @@ func setupVars() models.DBLocation {
 
 func main() {
 	db := setupVars()
-	err := utils.GetDatabase(db)
+	err := maxmind.GetDatabase(db)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -161,7 +163,7 @@ func main() {
 			for {
 				select {
 				case <-ticker.C:
-					err := utils.GetDatabase(db)
+					err := maxmind.GetDatabase(db)
 					if err != nil {
 						fmt.Println(err)
 						os.Exit(1)
