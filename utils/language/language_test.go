@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetLanguage(t *testing.T) {
-	models.Languages = LoadLanguages("../../languages.json")
+	models.LanguageConfig = LoadLanguages("../../languages.json")
 	language := GetLanguage("NO")
 
 	if language.Language != "en" {
