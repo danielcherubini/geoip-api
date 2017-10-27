@@ -29,23 +29,22 @@ func GetCountry(ip net.IP) *geoip2.Country {
 }
 
 //GetLocale takes a country_code and returns object
-func GetLocale(r *http.Request) (error, models.Response) {
+func GetLocale(r *http.Request) (models.Response, error) {
 	locale := &models.Response{}
 
 	ipString := r.URL.Query().Get("ip")
 	ip := ip.GetIP(ipString)
 	if ip == nil {
 		err := errors.New("Invalid IP")
-		return err, *locale
-	} else {
-		countryCode := GetCountry(ip).Country.IsoCode
-
-		language := language.GetLanguage(countryCode).Language
-		locale.IPAddress = ip.String()
-		locale.CountryCode = countryCode
-		locale.Language = language
-		locale.IsoString = language + "-" + countryCode
-		return nil, *locale
+		return *locale, err
 	}
+	countryCode := GetCountry(ip).Country.IsoCode
+
+	language := language.GetLanguage(countryCode).Language
+	locale.IPAddress = ip.String()
+	locale.CountryCode = countryCode
+	locale.Language = language
+	locale.IsoString = language + "_" + countryCode
+	return *locale, nil
 
 }

@@ -52,7 +52,7 @@ func TestCheckIpRoute(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	expected := `{"ip_address":"193.215.2.26","country_code":"NO","language":"en","iso":"en-NO"}`
+	expected := `{"ip_address":"193.215.2.26","country_code":"NO","language":"en","iso":"en_NO"}`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
