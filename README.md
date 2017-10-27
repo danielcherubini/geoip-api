@@ -24,15 +24,22 @@ I convert ip's into countries and stuff
 # Language JSON
 
 ```json
-[
-    { "language": "en", "country": "US" },
-    { "language": "en", "country": "CA" },
-    { "language": "en", "country": "AU" },
-    { "language": "en", "country": "GB" },
-    { "language": "en", "country": "NO" },
-    { "language": "es", "country": "MX" },
-    { "language": "es", "country": "ES" }
-]
+{   
+    "languages": [
+        { "language": "en", "country": "US" },
+        { "language": "en", "country": "CA" },
+        { "language": "en", "country": "AU" },
+        { "language": "en", "country": "GB" },
+        { "language": "en", "country": "NO" },
+        { "language": "es", "country": "MX" },
+        { "language": "es", "country": "ES" }
+    ],
+    "default": { 
+        "language": "en", 
+        "country": "NO" 
+    }
+}
+
 ```
 
 # API Usage
