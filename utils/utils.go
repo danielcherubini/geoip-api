@@ -13,7 +13,7 @@ import (
 )
 
 //GetCountry takes an ipString and returns a country
-func GetCountry(ip net.IP) *geoip2.Country {
+func GetCountry(ip net.IP) string {
 	db, err := geoip2.Open("geo.mmdb")
 	if err != nil {
 		log.Fatal(err)
@@ -25,7 +25,14 @@ func GetCountry(ip net.IP) *geoip2.Country {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return record
+
+	//Gets the Countrycode
+	countryCode := record.Country.IsoCode
+	if countryCode == "" {
+		countryCode = models.LanguageConfig.Default.Country
+	}
+
+	return countryCode
 }
 
 //GetLocale takes a country_code and returns object
@@ -38,7 +45,7 @@ func GetLocale(r *http.Request) (models.Response, error) {
 		err := errors.New("Invalid IP")
 		return *locale, err
 	}
-	countryCode := GetCountry(ip).Country.IsoCode
+	countryCode := GetCountry(ip)
 
 	language := language.GetLanguage(countryCode).Language
 	locale.IPAddress = ip.String()

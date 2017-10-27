@@ -84,7 +84,7 @@ func Setup() *http.Server {
 
 //Load this gets the config file from flag
 // accepts --lang flag
-func Load() []models.Language {
+func Load() models.Language {
 	if models.ConfigFile != "" {
 		langFile = models.ConfigFile
 	} else {
@@ -175,7 +175,7 @@ func main() {
 				}
 			}
 		}()
-		models.Languages = Load()
+		models.LanguageConfig = Load()
 		fmt.Println("Loaded Languages")
 		log.Fatal(Setup().ListenAndServe())
 	}
