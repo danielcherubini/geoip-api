@@ -1,9 +1,21 @@
-[
-    { "language": "en", "country": "US" },
-    { "language": "en", "country": "CA" },
-    { "language": "en", "country": "AU" },
-    { "language": "en", "country": "GB" },
-    { "language": "en", "country": "NO" },
-    { "language": "es", "country": "MX" },
-    { "language": "es", "country": "ES" }
-]
+{
+    "languages": [
+        { "language": "en", "country": "US" },
+        { "language": "en", "country": "CA" },
+        { "language": "en", "country": "AU" },
+        { "language": "en", "country": "GB" },
+        { "language": "no", "country": "NO" },
+        { "language": "es", "country": "MX" },
+        { "language": "es", "country": "ES" },
+        { "language": "es", "country": "CO" },
+        { "language": "es", "country": "AR" },
+        { "language": "es", "country": "CL" },
+        { "language": "pt", "country": "BR" },
+        { "language": "pt", "country": "PT" },
+        { "language": "pl", "country": "PL" },
+        { "language": "de", "country": "DE" },
+        { "language": "fr", "country": "FR" },
+        { "language": "it", "country": "IT" }
+    ],
+    "default": { "language": "en", "country": "NO" }
+}
