@@ -4,9 +4,6 @@ go:
 before_install:
 - go get github.com/mattn/goveralls
 - go get -d -v ./...
-- go test
-script:
-- "$HOME/gopath/bin/goveralls -service=travis-ci"
 before_deploy:
 - make
 deploy:
