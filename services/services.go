@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/danmademe/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/models"
 )
 
 var tempDir = os.TempDir()

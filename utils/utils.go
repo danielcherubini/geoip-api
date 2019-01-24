@@ -6,9 +6,9 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/danmademe/geoip-api/models"
-	"github.com/danmademe/geoip-api/utils/ip"
-	"github.com/danmademe/geoip-api/utils/language"
+	"github.com/danielcherubini/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/utils/ip"
+	"github.com/danielcherubini/geoip-api/utils/language"
 	geoip2 "github.com/oschwald/geoip2-golang"
 )
 

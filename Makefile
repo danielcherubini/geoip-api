@@ -1,4 +1,4 @@
-package = github.com/danmademe/geoip-api
+package = github.com/danielcherubini/geoip-api
 
 .PHONY: release
 

@@ -3,7 +3,7 @@ package maxmind
 import (
 	"testing"
 
-	"github.com/danmademe/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/models"
 )
 
 func TestGetDatabase(t *testing.T) {

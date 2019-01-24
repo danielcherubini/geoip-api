@@ -2,7 +2,7 @@
 FILE="/lib/systemd/system/geoip-api.service"
 
 geoipFile="geoip-api-linux-amd64"
-curl -s https://api.github.com/repos/danmademe/geoip-api/releases | grep browser_download_url | grep ${geoipFile} | head -n 1 | cut -d '"' -f 4 | wget -i -
+curl -s https://api.github.com/repos/danielcherubini/geoip-api/releases | grep browser_download_url | grep ${geoipFile} | head -n 1 | cut -d '"' -f 4 | wget -i -
 
 
 chmod +x ${geoipFile}

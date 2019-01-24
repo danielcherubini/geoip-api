@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/danmademe/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/models"
 )
 
 func TestGetLanguage(t *testing.T) {

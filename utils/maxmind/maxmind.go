@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/danmademe/geoip-api/models"
-	"github.com/danmademe/geoip-api/services"
-	"github.com/danmademe/geoip-api/utils"
+	"github.com/danielcherubini/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/services"
+	"github.com/danielcherubini/geoip-api/utils"
 )
 
 var DBUrl string

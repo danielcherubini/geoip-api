@@ -18,6 +18,6 @@ deploy:
         - release/geoip-api-macos
         - release/geoip-api-win64.exe
     on:
-        repo: danmademe/geoip-api
+        repo: danielcherubini/geoip-api
         tags: true
         all_branches: true

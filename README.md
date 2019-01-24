@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/danmademe/geoip-api.svg?branch=master)](https://travis-ci.org/danmademe/geoip-api) [![Coverage Status](https://coveralls.io/repos/github/danmademe/geoip-api/badge.svg?branch=master)](https://coveralls.io/github/danmademe/geoip-api?branch=master)
+[![Build Status](https://travis-ci.org/danielcherubini/geoip-api.svg?branch=master)](https://travis-ci.org/danielcherubini/geoip-api) [![Coverage Status](https://coveralls.io/repos/github/danielcherubini/geoip-api/badge.svg?branch=master)](https://coveralls.io/github/danielcherubini/geoip-api?branch=master)
 # geoip-api
 I convert ip's into countries and stuff
 
@@ -50,5 +50,5 @@ curl http://127.0.0.1:45000/\?ip\=193.215.2.26
 
 # Install using
 ```sh
-curl -Ls https://raw.githubusercontent.com/danmademe/geoip-api/master/install.sh | sudo -H sh
+curl -Ls https://raw.githubusercontent.com/danielcherubini/geoip-api/master/install.sh | sudo -H sh
 ```

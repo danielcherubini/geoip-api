@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/danmademe/geoip-api/models"
-	"github.com/danmademe/geoip-api/utils/language"
+	"github.com/danielcherubini/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/utils/language"
 )
 
 func TestSetup(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/danmademe/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/models"
 )
 
 //LoadLanguages loads languages to a languages model

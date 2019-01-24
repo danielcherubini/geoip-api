@@ -9,10 +9,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/danmademe/geoip-api/models"
-	"github.com/danmademe/geoip-api/utils"
-	"github.com/danmademe/geoip-api/utils/language"
-	"github.com/danmademe/geoip-api/utils/maxmind"
+	"github.com/danielcherubini/geoip-api/models"
+	"github.com/danielcherubini/geoip-api/utils"
+	"github.com/danielcherubini/geoip-api/utils/language"
+	"github.com/danielcherubini/geoip-api/utils/maxmind"
 	"github.com/gorilla/mux"
 )
 
@@ -179,5 +179,4 @@ func main() {
 		fmt.Println("Loaded Languages")
 		log.Fatal(Setup().ListenAndServe())
 	}
-
 }
